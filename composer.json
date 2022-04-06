@@ -1,0 +1,17 @@
+{
+    "name": "torstendittmann/utopia-overhaul",
+    "autoload": {
+        "psr-4": {
+            "UtopiaOverhaul\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Torsten Dittmann",
+            "email": "torsten.dittmann@googlemail.com"
+        }
+    ],
+    "require": {
+        "utopia-php/framework": "^0.19.5"
+    }
+}
