@@ -24,7 +24,7 @@ class App
             ->setMethod($method)
             ->setPath($method);
 
-        foreach ($reflector->getProperties() as $property) {
+            foreach ($reflector->getProperties() as $property) {
             if ($property->getAttributes(Param::class)) {
                 $validator = $property->getAttributes(Validator::class, ReflectionAttribute::IS_INSTANCEOF);
                 $validatorInstance = $validator ? $validator[0]->newInstance() : throw new \Exception("Validators are not optional.", 500);

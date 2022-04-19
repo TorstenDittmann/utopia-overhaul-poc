@@ -13,14 +13,27 @@ use Utopia\Response;
 use UtopiaOverhaul\Validator\ValidatorInteger;
 use UtopiaOverhaul\Validator\ValidatorText;
 
+trait UserResource
+{
+    protected array $user = [
+        '$id' => 'torsten',
+        'name' => 'Torsten Dittmann',
+        'email' => 'torsten@appwrite.io'
+    ];
+}
+
+
 #[Route('/')]
 #[Method(Method::GET)]
 class IndexController extends BaseController
 {
+    use UserResource;
+
     public function action(Request $request, Response $response): void
     {
         $response->json([
-            'hello' => 'world'
+            'hello' => 'world',
+            'user' => $this->user
         ]);
     }
 }

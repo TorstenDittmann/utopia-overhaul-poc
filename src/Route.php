@@ -11,6 +11,7 @@ class Route
     protected string $path;
     protected string $method;
     protected array $params = [];
+    protected array $resources = [];
 
     public function __construct(string $controller)
     {
@@ -41,6 +42,7 @@ class Route
     public function run(Request $request, Response $response): void
     {
         $class = new $this->controller();
+
         foreach ($this->params as $param) {
             /** @var Param $param */
             if (\is_null($request->getParam($param->key))) {
