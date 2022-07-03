@@ -4,7 +4,7 @@ namespace UtopiaOverhaul;
 
 class Method
 {
-    const GET = 'GET';
+    public const GET = 'GET';
 
-    const POST = 'POST';
+    public const POST = 'POST';
 }
