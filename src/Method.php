@@ -2,10 +2,9 @@
 
 namespace UtopiaOverhaul;
 
-use Utopia\Request;
-use Utopia\Response;
-
-class Method {
+class Method
+{
     const GET = 'GET';
+
     const POST = 'POST';
 }

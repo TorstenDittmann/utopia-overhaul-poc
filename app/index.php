@@ -1,27 +1,28 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
-use UtopiaOverhaul\App;
-use UtopiaOverhaul\BaseController;
-use UtopiaOverhaul\Route;
-use UtopiaOverhaul\Method;
-use UtopiaOverhaul\Param;
+require_once __DIR__.'/../vendor/autoload.php';
 
 use Utopia\Request;
 use Utopia\Response;
-use UtopiaOverhaul\Validator\ValidatorInteger;
-use UtopiaOverhaul\Validator\ValidatorText;
+use UtopiaOverhaul\App;
+use UtopiaOverhaul\BaseController;
+use UtopiaOverhaul\Method;
+use UtopiaOverhaul\Param;
+use UtopiaOverhaul\Route;
+use UtopiaOverhaul\Validator\Integer;
+use UtopiaOverhaul\Validator\Text;
 
 trait UserResource
 {
-    protected array $user = [
-        '$id' => 'torsten',
-        'name' => 'Torsten Dittmann',
-        'email' => 'torsten@appwrite.io'
-    ];
-}
+    private bool $database;
 
+    protected function getDatabase(): bool
+    {
+        $this->database ??= true;
+
+        return $this->database;
+    }
+}
 
 #[Route('/')]
 #[Method(Method::GET)]
@@ -33,7 +34,7 @@ class IndexController extends BaseController
     {
         $response->json([
             'hello' => 'world',
-            'user' => $this->user
+            'counter' => $this->getDatabase(),
         ]);
     }
 }
@@ -43,16 +44,16 @@ class IndexController extends BaseController
 class AboutController extends BaseController
 {
     #[Param]
-    #[ValidatorText('12')]
+    #[Text('12')]
     public string $paramOne;
 
     #[Param]
-    #[ValidatorInteger]
+    #[Integer]
     public ?int $paramTwo = 123;
 
     #[Param]
-    #[ValidatorText('255')]
-    public ?string $paramThree = "optional";
+    #[Text('255')]
+    public ?string $paramThree = 'optional';
 
     public string $notExposed;
 
@@ -70,6 +71,7 @@ $app = new App();
 $app
     ->register(IndexController::class)
     ->register(AboutController::class);
+
 $app->start();
 $request = new Request();
 $response = new Response();

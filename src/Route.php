@@ -8,9 +8,16 @@ use Utopia\Response;
 class Route
 {
     protected string $controller;
+
     protected string $path;
+
     protected string $method;
+
+    /**
+     * @var Param[]
+     */
     protected array $params = [];
+
     protected array $resources = [];
 
     public function __construct(string $controller)
@@ -44,13 +51,12 @@ class Route
         $class = new $this->controller();
 
         foreach ($this->params as $param) {
-            /** @var Param $param */
             if (\is_null($request->getParam($param->key))) {
-                if (!$param->optional) {
+                if (! $param->optional) {
                     throw new \Exception("Parameter '{$param->key}' is not optional.", Response::STATUS_CODE_BAD_REQUEST);
                 }
             } else {
-                if (!$param->validator->isValid($request->getParam($param->key))) {
+                if (! $param->validator->isValid($request->getParam($param->key))) {
                     throw new \Exception($param->validator->getDescription(), Response::STATUS_CODE_BAD_REQUEST);
                 }
                 $class->{$param->key} = $request->getParam($param->key, $param->default);
